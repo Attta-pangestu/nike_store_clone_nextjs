@@ -1,0 +1,7 @@
+FIREBASE_API_KEY = AIzaSyBtXHYcXQPLR6fd66C1htEGNM4ZRgJzGi0
+FIREBASE_AUTH_DOMAIN = nike-store-clone-nextjs.firebaseapp.com
+FIREBASE_PROJECT_ID = nike-store-clone-nextjs
+FIREBASE_STORAGE_BUCKET = nike-store-clone-nextjs.appspot.com
+FIREBASE_MESSAGING_SENDER_ID = 777301070868
+FIREBASE_APP_ID = 1:777301070868:web:641c48a23b08ceeec98301
+
