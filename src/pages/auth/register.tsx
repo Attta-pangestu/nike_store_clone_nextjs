@@ -1,9 +1,14 @@
-import Head from "next/head";
-import Image from "next/image";
+import React from "react";
+import RegisterView from "@/components/views/auth/Register";
 import { Poppins } from "next/font/google";
-import styles from "@/styles/Home.module.css";
+import Head from "next/head";
 
-export default function Home() {
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
+
+const RegisterPage = () => {
   return (
     <>
       <Head>
@@ -12,7 +17,10 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1>Hello world</h1>
+
+      <RegisterView />
     </>
   );
-}
+};
+
+export default RegisterPage;
