@@ -9,7 +9,7 @@ import {
   addDoc,
 } from "firebase/firestore";
 import app from "./init";
-import bcrypt from 'bcrypt';
+import bcrypt from "bcrypt";
 
 const firestoreApp = getFirestore(app);
 
@@ -34,19 +34,10 @@ export const signUp = async (
   },
   callback: Function
 ) => {
-  // check exist user
-  const querySnapshot = query(
-    collection(firestoreApp, "users"),
-    where("email", "==", userData.email)
-  );
-  const snapshot = await getDocs(querySnapshot);
-  const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-  if (data.length > 0) {
-    return callback(false);
-  } else {
-    if(!userData.role) userData.role = "user";
+  if ((await userExisted(userData.email)).length > 0) callback(false);
+  else {
+    if (!userData.role) userData.role = "user";
     userData.password = await bcrypt.hash(userData.password, 10);
-
 
     await addDoc(collection(firestoreApp, "users"), userData)
       .then(() => {
@@ -57,4 +48,21 @@ export const signUp = async (
         console.log(err);
       });
   }
+};
+
+export const signIn = async (email: string) => {
+  const existedUser = await userExisted(email);
+  if (existedUser.length === 0) return null;
+  const user = existedUser[0];
+  return user;
+};
+
+const userExisted = async (email: string) => {
+  const querySnapshot = query(
+    collection(firestoreApp, "users"),
+    where("email", "==", email)
+  );
+  const snapshot = await getDocs(querySnapshot);
+  const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  return data;
 };

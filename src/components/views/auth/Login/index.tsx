@@ -1,9 +1,16 @@
 import React, { FormEvent } from "react";
-import style from "../Auth.module.scss";
 import Link from "next/link";
+import style from "../Auth.module.scss";
+import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
 
-const RegisterView = () => {
+const LoginView = () => {
   const [isLoading, setIsLoading] = React.useState(false);
+  const { query } = useRouter();
+
+  const callbackUrl: string = query.callbackUrl
+    ? query.callbackUrl.toString()
+    : "/auth/register";
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -11,27 +18,24 @@ const RegisterView = () => {
     const form = event.target as HTMLFormElement;
 
     const data = {
-      name: form.username.value,
       email: form.email.value,
       password: form.password.value,
     };
 
     try {
-      const response = await fetch("/api/user/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+      const res = await signIn("credentials", {
+        redirect: true,
+        email: data.email,
+        password: data.password,
+        callbackUrl,
       });
-      const responseJSON = await response.json();
 
-      console.log(responseJSON);
-      if (response.status === 200) {
+      if (!res?.error) {
         setIsLoading(false);
         form.reset();
+        // push(callbackUrl);
       } else {
-        throw new Error("Gagal mendaftar pengguna");
+        setIsLoading(true);
       }
     } catch (error) {
       console.error("Terjadi kesalahan:", error);
@@ -45,18 +49,9 @@ const RegisterView = () => {
         <div className={style.background_shape}></div>
       </div>
       <div className={style.register}>
-        <h1 className={style.register_title}>Register</h1>
+        <h1 className={style.register_title}>Login</h1>
         <div className={style.register_form}>
           <form onSubmit={handleSubmit}>
-            <div className={style.register_inputBox}>
-              <label className={style.register_label}>Username</label>
-              <input
-                className={style.register_input}
-                type="text"
-                name="username"
-                placeholder="Username"
-              />
-            </div>
             <div className={style.register_inputBox}>
               <label className={style.register_label}>Email</label>
               <input
@@ -76,13 +71,13 @@ const RegisterView = () => {
               />
             </div>
             <button type="submit" className={style.register_button}>
-              {isLoading ? "Loading..." : "Register"}
+              {isLoading ? "Loading..." : "Login"}
             </button>
           </form>
         </div>
         <div>
           <p>
-            Sudah punya akun? Masuk <Link href="/auth/login">disini</Link>
+            Belum punya akun? Daftar <Link href="/auth/register">disini</Link>
           </p>
         </div>
       </div>
@@ -90,4 +85,4 @@ const RegisterView = () => {
   );
 };
 
-export default RegisterView;
+export default LoginView;
