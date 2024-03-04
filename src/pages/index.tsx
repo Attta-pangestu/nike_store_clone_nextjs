@@ -1,11 +1,9 @@
 import Head from "next/head";
-import Image from "next/image";
-import { Poppins } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import { useSession } from "next-auth/react";
+import { getSession, signOut } from "next-auth/react";
+import { GetServerSideProps } from "next";
+
 export default function Home() {
-  const { data } = useSession();
-  console.log(data);
   return (
     <>
       <Head>
@@ -15,6 +13,25 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <h1>Hello world</h1>
+      <button onClick={() => signOut()}>Sign Out</button>
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context);
+  console.log(session);
+
+  // if (!session) {
+  //   return {
+  //     redirect: {
+  //       destination: "/auth/login",
+  //       permanent: false,
+  //     },
+  //   };
+  // }
+
+  return {
+    props: { session },
+  };
+};

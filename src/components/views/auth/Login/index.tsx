@@ -3,6 +3,7 @@ import Link from "next/link";
 import style from "../Auth.module.scss";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
+import { FaGoogle } from "react-icons/fa";
 
 const LoginView = () => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -42,6 +43,14 @@ const LoginView = () => {
     }
   };
 
+  const handleLoginWithGoogle = async () => {
+    try {
+      await signIn("google", { callbackUrl });
+    } catch (error) {
+      console.error("Terjadi kesalahan:", error);
+    }
+  };
+
   return (
     <section className={style.wrapper}>
       <div className={style.background}>
@@ -70,8 +79,19 @@ const LoginView = () => {
                 placeholder="Password"
               />
             </div>
-            <button type="submit" className={style.register_button}>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className={style.register_button}
+            >
               {isLoading ? "Loading..." : "Login"}
+            </button>
+            <button
+              onClick={() => handleLoginWithGoogle()}
+              type="submit"
+              className={style.register_button}
+            >
+              <FaGoogle size={22} /> Login With Google
             </button>
           </form>
         </div>
