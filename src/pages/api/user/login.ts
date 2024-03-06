@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { signIn } from "@/lib/firebase/service";
+import { signIn } from "@/pages/services/auth";
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse

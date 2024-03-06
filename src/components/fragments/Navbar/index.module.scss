@@ -1,0 +1,40 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 0.5rem;
+  padding-inline: 2rem;
+  background-color: rgb(12, 12, 12);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: white;
+
+  &_logo {
+    font-size: 5rem;
+    font-weight: 600;
+  }
+
+  &_menu {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 1.2rem;
+  }
+
+  &_auth {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &_buttonAuth {
+      border: none;
+      background-color: white;
+      color: black;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+    }
+  }
+}

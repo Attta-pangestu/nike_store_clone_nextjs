@@ -3,8 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcrypt";
 import NextAuth from "next-auth/next";
-import { signIn, loginWithGoogle } from "@/lib/firebase/service";
-
+import { signIn, loginWithGoogle } from "@/pages/services/auth";
 const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",

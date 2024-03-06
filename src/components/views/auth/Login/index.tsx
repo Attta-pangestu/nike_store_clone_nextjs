@@ -1,9 +1,10 @@
 import React, { FormEvent } from "react";
 import Link from "next/link";
-import style from "../Auth.module.scss";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
-import { FaGoogle } from "react-icons/fa";
+import FormInput from "@/components/UI/Auth/Form";
+// component
+import AuthLayout from "@/components/layouts/AuthLayout";
 
 const LoginView = () => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -52,56 +53,18 @@ const LoginView = () => {
   };
 
   return (
-    <section className={style.wrapper}>
-      <div className={style.background}>
-        <div className={style.background_shape}></div>
-        <div className={style.background_shape}></div>
-      </div>
-      <div className={style.register}>
-        <h1 className={style.register_title}>Login</h1>
-        <div className={style.register_form}>
-          <form onSubmit={handleSubmit}>
-            <div className={style.register_inputBox}>
-              <label className={style.register_label}>Email</label>
-              <input
-                className={style.register_input}
-                type="email"
-                name="email"
-                placeholder="Email"
-              />
-            </div>
-            <div className={style.register_inputBox}>
-              <label className={style.register_label}>Password</label>
-              <input
-                className={style.register_input}
-                type="password"
-                name="password"
-                placeholder="Password"
-              />
-            </div>
-            <button
-              type="submit"
-              disabled={isLoading}
-              className={style.register_button}
-            >
-              {isLoading ? "Loading..." : "Login"}
-            </button>
-            <button
-              onClick={() => handleLoginWithGoogle()}
-              type="submit"
-              className={style.register_button}
-            >
-              <FaGoogle size={22} /> Login With Google
-            </button>
-          </form>
-        </div>
-        <div>
-          <p>
-            Belum punya akun? Daftar <Link href="/auth/register">disini</Link>
-          </p>
-        </div>
-      </div>
-    </section>
+    <AuthLayout
+      linkHref="/auth/register"
+      linkTitle="Sudah punya akun login disini "
+      title="Login"
+    >
+      <FormInput
+        handleSubmit={handleSubmit}
+        isLoading={isLoading}
+        handleLoginWithGoogle={handleLoginWithGoogle}
+        isLogin={true}
+      />
+    </AuthLayout>
   );
 };
 

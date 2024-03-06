@@ -1,6 +1,10 @@
 import React, { FormEvent } from "react";
-import style from "../Auth.module.scss";
 import Link from "next/link";
+import Background from "@/components/UI/Background";
+import FormInput from "@/components/UI/Auth/Form";
+import { signIn } from "next-auth/react";
+import authServices from "@/pages/services/fetching";
+import AuthLayout from "@/components/layouts/AuthLayout";
 
 const RegisterView = () => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -9,24 +13,15 @@ const RegisterView = () => {
     event.preventDefault();
     setIsLoading(true);
     const form = event.target as HTMLFormElement;
-
     const data = {
       name: form.username.value,
       email: form.email.value,
       password: form.password.value,
     };
+    console.log(form.username.value);
 
     try {
-      const response = await fetch("/api/user/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      const responseJSON = await response.json();
-
-      console.log(responseJSON);
+      const response = await authServices.registerAuth(data);
       if (response.status === 200) {
         setIsLoading(false);
         form.reset();
@@ -38,55 +33,27 @@ const RegisterView = () => {
     }
   };
 
+  const handleRegisterWithGoogle = async () => {
+    try {
+      await signIn("google", { callbackUrl: "/" });
+    } catch (error) {
+      console.error("Terjadi kesalahan:", error);
+    }
+  };
+
   return (
-    <section className={style.wrapper}>
-      <div className={style.background}>
-        <div className={style.background_shape}></div>
-        <div className={style.background_shape}></div>
-      </div>
-      <div className={style.register}>
-        <h1 className={style.register_title}>Register</h1>
-        <div className={style.register_form}>
-          <form onSubmit={handleSubmit}>
-            <div className={style.register_inputBox}>
-              <label className={style.register_label}>Username</label>
-              <input
-                className={style.register_input}
-                type="text"
-                name="username"
-                placeholder="Username"
-              />
-            </div>
-            <div className={style.register_inputBox}>
-              <label className={style.register_label}>Email</label>
-              <input
-                className={style.register_input}
-                type="email"
-                name="email"
-                placeholder="Email"
-              />
-            </div>
-            <div className={style.register_inputBox}>
-              <label className={style.register_label}>Password</label>
-              <input
-                className={style.register_input}
-                type="password"
-                name="password"
-                placeholder="Password"
-              />
-            </div>
-            <button type="submit" className={style.register_button}>
-              {isLoading ? "Loading..." : "Register"}
-            </button>
-          </form>
-        </div>
-        <div>
-          <p>
-            Sudah punya akun? Masuk <Link href="/auth/login">disini</Link>
-          </p>
-        </div>
-      </div>
-    </section>
+    <AuthLayout
+      linkHref="/auth/login"
+      linkTitle="Belum punya akun daftar "
+      title="Register"
+    >
+      <FormInput
+        handleSubmit={handleSubmit}
+        isLoading={isLoading}
+        handleLoginWithGoogle={handleRegisterWithGoogle}
+        isLogin={false}
+      />
+    </AuthLayout>
   );
 };
 
