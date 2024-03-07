@@ -20,12 +20,6 @@ export default function App({
 
   return (
     <SessionProvider session={session}>
-      <Head>
-        <link
-          href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-          rel="stylesheet"
-        ></link>
-      </Head>
       <main className={poppins.className}>
         {!disableNavbarPath.includes(pathname.split("/")[1]) ? (
           <Navbar />

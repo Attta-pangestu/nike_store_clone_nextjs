@@ -36,7 +36,7 @@ const Navbar = () => {
         <SiNike className={style.navbar_logo} />
       </Link>
       <nav className={style.navbar_menu}>
-        <Link href="/">Home</Link>
+        <Link href="/admin">Dashboard</Link>
         <Link href="/">About</Link>
       </nav>
 

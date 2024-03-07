@@ -49,6 +49,7 @@ const SideBar = (props: PropTypes) => {
         <button
           onClick={() => signOut()}
           className={style.sidebar_footer_button}
+          type="button"
         >
           <i className={`bx bx-log-out ${style.sidebar_top_icon}`}></i>
           Logout
