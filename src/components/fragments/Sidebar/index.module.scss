@@ -1,0 +1,86 @@
+.sidebar {
+  background-color: #000;
+  color: #fff;
+  padding: 2rem 1rem;
+  width: 300px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &_top {
+    display: flex;
+    align-items: center;
+    &_icon {
+      font-weight: 600;
+      display: inline;
+      font-size: 2rem;
+    }
+    &_title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      display: inline;
+      margin-left: 0.5rem;
+    }
+  }
+
+  &_icon {
+    font-weight: 600;
+    display: inline;
+    font-size: 2rem;
+  }
+
+  &_menu {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    &_item {
+      display: flex;
+      align-items: center;
+      margin-top: 0.7rem;
+      gap: 1rem;
+      font-size: 1.2rem;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      background-color: rgb(82, 94, 105);
+      cursor: pointer;
+
+      &_active {
+        background-color: #fff;
+        color: #000;
+        > a {
+          color: black;
+        }
+      }
+
+      &:hover {
+        background-color: #fff;
+        color: #000;
+        transition: all 0.3s ease;
+        > a {
+          color: black;
+        }
+      }
+    }
+  }
+
+  &_footer {
+    &_button {
+      width: 100%;
+      background-color: white;
+      color: #080710;
+      padding: 15px 0;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+}

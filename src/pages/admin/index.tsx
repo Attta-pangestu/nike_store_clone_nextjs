@@ -1,7 +1,12 @@
 import React from "react";
+import AdminLayout from "@/components/layouts/AdminLayout";
 
 const AdminPage = () => {
-  return <div>AdminPage </div>;
+  return (
+    <AdminLayout>
+      <div>Admin Page</div>
+    </AdminLayout>
+  );
 };
 
 export default AdminPage;

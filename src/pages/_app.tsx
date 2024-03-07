@@ -4,6 +4,7 @@ import { Poppins } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import Navbar from "@/components/fragments/Navbar";
 import { useRouter } from "next/router";
+import Head from "next/head";
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -19,6 +20,12 @@ export default function App({
 
   return (
     <SessionProvider session={session}>
+      <Head>
+        <link
+          href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+          rel="stylesheet"
+        ></link>
+      </Head>
       <main className={poppins.className}>
         {!disableNavbarPath.includes(pathname.split("/")[1]) ? (
           <Navbar />
