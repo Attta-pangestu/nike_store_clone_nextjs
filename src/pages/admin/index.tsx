@@ -1,8 +1,14 @@
 import React from "react";
 import DashboardAdmin from "@/components/views/admin/Dashboard";
 import Head from "next/head";
+import { getSession } from "next-auth/react";
+import { GetServerSideProps } from "next";
 
-const AdminPage = () => {
+type PropTypes = {
+  session: any;
+};
+
+const AdminPage = (props: PropTypes) => {
   return (
     <>
       <Head>
@@ -17,3 +23,12 @@ const AdminPage = () => {
 };
 
 export default AdminPage;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession(context);
+  console.log(session);
+
+  return {
+    props: { session },
+  };
+};

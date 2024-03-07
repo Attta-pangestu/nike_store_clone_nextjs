@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import style from "./index.module.scss";
 import Link from "next/link";
 import { SiNike } from "react-icons/si";
 import Image from "next/image";
-import { signOut, useSession } from "next-auth/react";
+import { getSession, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { GetServerSideProps } from "next";
+import { Session } from "next-auth";
 
 type UserPropTypes = {
   name: string;
@@ -13,11 +15,11 @@ type UserPropTypes = {
   role: string;
 };
 
-const Navbar = () => {
-  const { data: session, status } = useSession();
+const Navbar = (props: any) => {
+  const { session } = props;
   const user = session?.user as UserPropTypes;
+  console.log(session);
   const { push } = useRouter();
-  console.log(session, status);
 
   const userExistComp = () => {
     return (
@@ -33,16 +35,6 @@ const Navbar = () => {
     );
   };
 
-  useEffect(() => {
-    console.log(status, user);
-
-    if (status !== "authenticated") {
-      // Redirect logic here
-      push("/auth/login");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status, user]);
-
   return (
     <div className={style.navbar}>
       <Link href="/">
@@ -50,11 +42,11 @@ const Navbar = () => {
       </Link>
       <nav className={style.navbar_menu}>
         <Link href="/admin">Dashboard</Link>
-        <Link href="/">{status}</Link>
+        <Link href="/">Home</Link>
       </nav>
 
       <div className={style.navbar_auth}>
-        <>{userExistComp()}</>
+        {user ? userExistComp() : <Link href="/auth/login">Login</Link>}
       </div>
     </div>
   );
