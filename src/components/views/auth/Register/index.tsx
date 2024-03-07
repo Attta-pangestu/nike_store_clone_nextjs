@@ -1,11 +1,8 @@
 import React, { FormEvent } from "react";
-import Link from "next/link";
-import Background from "@/components/UI/Background";
 import FormInput from "@/components/UI/Auth/Form";
 import { signIn } from "next-auth/react";
-import authServices from "@/pages/services/fetching";
 import AuthLayout from "@/components/layouts/AuthLayout";
-
+import authServices from "@/services/fetching";
 const RegisterView = () => {
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -18,6 +15,7 @@ const RegisterView = () => {
       email: form.email.value,
       password: form.password.value,
     };
+    console.log(form.username.value);
     console.log(form.username.value);
 
     try {
@@ -32,6 +30,7 @@ const RegisterView = () => {
       console.error("Terjadi kesalahan:", error);
     }
   };
+
 
   const handleRegisterWithGoogle = async () => {
     try {
@@ -54,6 +53,7 @@ const RegisterView = () => {
         isLogin={false}
       />
     </AuthLayout>
+
   );
 };
 

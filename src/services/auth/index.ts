@@ -1,6 +1,5 @@
 import { addData, userExisted } from "@/lib/firebase/service";
-import bcrypt from "bcrypt";
-
+import bcrypt from "bcryptjs";
 export type UserData = {
   email: string;
   password: string;
@@ -19,6 +18,7 @@ export const signUp = async (userData: UserData, callback: Function) => {
       Math.floor(Math.random() * 100) + 1
     }`;
     userData.created_at = new Date();
+    console.log(userData);
 
     await addData("users", userData, callback);
   }

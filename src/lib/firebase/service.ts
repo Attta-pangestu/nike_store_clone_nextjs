@@ -9,8 +9,6 @@ import {
   addDoc,
 } from "firebase/firestore";
 import app from "./init";
-import bcrypt from "bcrypt";
-import { error } from "console";
 
 const firestoreApp = getFirestore(app);
 

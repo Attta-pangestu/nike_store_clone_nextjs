@@ -1,4 +1,4 @@
-import axiosInstance from "../../../lib/axios/instance";
+import axiosInstance from "../../lib/axios/instance";
 
 const authServices = {
   registerAuth: (data: any) => axiosInstance.post("/api/user/register", data),
