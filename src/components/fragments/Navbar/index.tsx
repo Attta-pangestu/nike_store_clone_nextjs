@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import style from "./index.module.scss";
 import Link from "next/link";
 import { SiNike } from "react-icons/si";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 type UserPropTypes = {
   name: string;
@@ -15,6 +16,7 @@ type UserPropTypes = {
 const Navbar = () => {
   const { data: session, status } = useSession();
   const user = session?.user as UserPropTypes;
+  const { push } = useRouter();
   console.log(session, status);
 
   const userExistComp = () => {
@@ -30,6 +32,17 @@ const Navbar = () => {
       </>
     );
   };
+
+  useEffect(() => {
+    console.log(status, user);
+
+    if (status !== "authenticated") {
+      // Redirect logic here
+      push("/auth/login");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status, user]);
+
   return (
     <div className={style.navbar}>
       <Link href="/">
@@ -41,13 +54,7 @@ const Navbar = () => {
       </nav>
 
       <div className={style.navbar_auth}>
-        {status === "authenticated" ? (
-          userExistComp()
-        ) : (
-          <Link href="/auth/login" className={style.navbar_auth_buttonAuth}>
-            Login
-          </Link>
-        )}
+        <>{userExistComp()}</>
       </div>
     </div>
   );
