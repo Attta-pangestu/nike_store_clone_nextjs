@@ -37,7 +37,7 @@ const Navbar = () => {
       </Link>
       <nav className={style.navbar_menu}>
         <Link href="/admin">Dashboard</Link>
-        <Link href="/">About</Link>
+        <Link href="/">{status}</Link>
       </nav>
 
       <div className={style.navbar_auth}>
