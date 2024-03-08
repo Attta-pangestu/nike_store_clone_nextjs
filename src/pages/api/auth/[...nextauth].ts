@@ -72,6 +72,7 @@ const authOptions: NextAuthOptions = {
         session.user.image = token.image;
       }
       console.log(session);
+
       return session;
     },
   },

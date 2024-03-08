@@ -7,6 +7,7 @@ import { getSession, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import { Session } from "next-auth";
+import { getToken } from "next-auth/jwt";
 
 type UserPropTypes = {
   name: string;

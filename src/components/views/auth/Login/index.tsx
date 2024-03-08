@@ -26,10 +26,9 @@ const LoginView = () => {
 
     try {
       const res = await signIn("credentials", {
-        redirect: true,
+        redirect: false,
         email: data.email,
         password: data.password,
-        callbackUrl,
       });
 
       if (!res?.error) {

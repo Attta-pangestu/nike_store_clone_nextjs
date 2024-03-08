@@ -1,9 +1,11 @@
 import Head from "next/head";
-import styles from "@/styles/Home.module.css";
-import { getSession, signOut } from "next-auth/react";
+import { getSession, signOut, useSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 
 export default function Home() {
+  const { data: session }: any = useSession();
+  console.log(session);
+
   return (
     <>
       <Head>
@@ -13,6 +15,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <h1>Hello world</h1>
+      <p>{session?.user?.email}</p>
       <button onClick={() => signOut()}>Sign Out</button>
     </>
   );
@@ -21,17 +24,16 @@ export default function Home() {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
   console.log(session);
-
-  // if (!session) {
-  //   return {
-  //     redirect: {
-  //       destination: "/auth/login",
-  //       permanent: false,
-  //     },
-  //   };
-  // }
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/auth/register",
+        permanent: false,
+      },
+    };
+  }
 
   return {
-    props: { session },
+    props: { session }, // Pastikan session diteruskan sebagai properti ke komponen Home
   };
 };
