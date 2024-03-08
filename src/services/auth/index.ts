@@ -57,3 +57,17 @@ export const loginWithGoogle = async (userData: UserData) => {
     }
   }
 };
+
+export const saveToLocalStorage = (session: any) => {
+  localStorage.setItem("nike-store-clone-app-user", JSON.stringify(session));
+};
+
+export const getFromLocalStorage = () => {
+  return JSON.parse(
+    localStorage.getItem("nike-store-clone-app-user") as string
+  );
+};
+
+export const removeFromLocalStorage = () => {
+  localStorage.removeItem("nike-store-clone-app-user");
+};

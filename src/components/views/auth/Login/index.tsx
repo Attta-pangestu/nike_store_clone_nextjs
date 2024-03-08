@@ -1,14 +1,23 @@
-import React, { FormEvent } from "react";
+import React, { FormEvent, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import FormInput from "@/components/UI/Auth/Form";
 // component
 import AuthLayout from "@/components/layouts/AuthLayout";
+import { saveToLocalStorage } from "@/services/auth";
 
 const LoginView = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const { query } = useRouter();
+  const session = useSession();
+
+  useEffect(() => {
+    if (session) {
+      saveToLocalStorage(session);
+      console.log(session);
+    }
+  }, [session]);
 
   const callbackUrl: string = query.callbackUrl
     ? query.callbackUrl.toString()
@@ -33,6 +42,8 @@ const LoginView = () => {
 
       if (!res?.error) {
         setIsLoading(false);
+
+        console.log(session);
         form.reset();
         // push(callbackUrl);
       } else {
