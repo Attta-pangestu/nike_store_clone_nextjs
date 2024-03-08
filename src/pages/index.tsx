@@ -1,11 +1,18 @@
 import Head from "next/head";
+import styles from "@/styles/Home.module.css";
 import { getSession, signOut, useSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
+import { useEffect } from "react";
 
 export default function Home() {
-  const { data: session }: any = useSession();
-  console.log(session);
-
+  const { data: session } = useSession();
+  useEffect(() => {
+    // localStorage.setItem("nike-store-clone-app-user", JSON.stringify(session));
+    const user = JSON.parse(
+      localStorage.getItem("nike-store-clone-app-user" as string) as string
+    );
+    console.log(user);
+  }, [session]);
   return (
     <>
       <Head>
