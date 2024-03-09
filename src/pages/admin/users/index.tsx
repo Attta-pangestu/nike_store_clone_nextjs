@@ -1,7 +1,11 @@
 import React from "react";
-
+import DashboardUsersView from "@/components/views/admin/Users";
 const AdminUserPage = () => {
-  return <div>AdminUserPage</div>;
+  return (
+    <>
+      <DashboardUsersView />
+    </>
+  );
 };
 
 export default AdminUserPage;

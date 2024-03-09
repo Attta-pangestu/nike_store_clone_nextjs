@@ -1,0 +1,47 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.7rem;
+  gap: 1rem;
+  box-shadow: 3px 6px 0 black;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow: 1px 3px 0 black;
+    transition: all 0.2s ease-in-out;
+  }
+
+  &.primary {
+    width: 100%;
+    padding-block: 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  &.secondary {
+    width: 50%;
+    padding-block: 0.6rem;
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  &.light {
+    color: black;
+    background-color: white;
+  }
+
+  &.semi {
+    color: white;
+    background-color: rgb(82, 94, 105);
+  }
+
+  &.dark {
+    color: white;
+    background-color: rgb(82, 94, 105);
+  }
+
+  border-radius: 0.5rem;
+  background-color: rgb(82, 94, 105);
+  cursor: pointer;
+}

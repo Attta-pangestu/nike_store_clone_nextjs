@@ -1,5 +1,6 @@
 import React from "react";
 import SideBar from "@/components/fragments/Sidebar";
+import style from "./index.module.scss";
 
 type PropTypes = {
   children: React.ReactNode;
@@ -25,15 +26,17 @@ const AdminLayout = (props: PropTypes) => {
       iconClass: "bxs-shopping-bag-alt",
     },
     {
-      namePage: "Profile",
-      hrefPage: "/admin/profile",
+      namePage: "Users",
+      hrefPage: "/admin/users",
       iconClass: "bx-user",
     },
   ];
   return (
-    <section>
-      <SideBar listMenuItem={listMenuItem} />
-      {children}
+    <section className={style.layout}>
+      <div className={style.layout_sidebar}>
+        <SideBar listMenuItem={listMenuItem} />
+      </div>
+      <div className={style.layout_children}>{children}</div>
     </section>
   );
 };

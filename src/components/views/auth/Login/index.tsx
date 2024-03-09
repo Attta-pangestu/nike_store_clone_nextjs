@@ -12,13 +12,6 @@ const LoginView = () => {
   const { query } = useRouter();
   const session = useSession();
 
-  useEffect(() => {
-    if (session) {
-      saveToLocalStorage(session);
-      console.log(session);
-    }
-  }, [session]);
-
   const callbackUrl: string = query.callbackUrl
     ? query.callbackUrl.toString()
     : "/auth/register";

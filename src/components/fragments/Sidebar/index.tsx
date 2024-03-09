@@ -3,6 +3,7 @@ import style from "./index.module.scss";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
+import Button from "@/components/UI/Base/Button";
 
 type PropTypes = {
   listMenuItem: {
@@ -17,7 +18,7 @@ const SideBar = (props: PropTypes) => {
   const { pathname } = useRouter();
   console.log(pathname);
   return (
-    <div className={style.sidebar}>
+    <>
       <div className={style.sidebar_top}>
         <i className={`bx bx-sidebar ${style.sidebar_top_icon}`}></i>
         <h1 className={style.sidebar_top_title}>Admin Panel</h1>
@@ -46,16 +47,14 @@ const SideBar = (props: PropTypes) => {
         </ul>
       </div>
       <div className={style.sidebar_footer}>
-        <button
-          onClick={() => signOut()}
-          className={style.sidebar_footer_button}
-          type="button"
-        >
-          <i className={`bx bx-log-out ${style.sidebar_top_icon}`}></i>
-          Logout
-        </button>
+        <Button onClick={() => signOut()} type="primary" theme="light">
+          <span className={style.sidebar_footer_item}>
+            <i className={`bx bx-log-out ${style.sidebar_top_icon}`}></i>
+            Logout
+          </span>
+        </Button>
       </div>
-    </div>
+    </>
   );
 };
 

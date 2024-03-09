@@ -2,16 +2,10 @@ import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import { getSession, signOut, useSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
-import { useEffect } from "react";
-import { saveToLocalStorage } from "@/services/auth";
 
 export default function Home() {
   const { data: session } = useSession();
-  useEffect(() => {
-    if (session) {
-      saveToLocalStorage(session);
-    }
-  }, [session]);
+
   return (
     <>
       <Head>
