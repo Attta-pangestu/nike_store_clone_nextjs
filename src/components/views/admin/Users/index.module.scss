@@ -37,4 +37,18 @@
       gap: 10px;
     }
   }
+
+  &_modal {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    input {
+      padding: 0.6rem 1rem;
+      background-color: cornsilk;
+      font-size: 1.2rem;
+      font-weight: 400;
+      border-radius: 10px;
+    }
+  }
 }

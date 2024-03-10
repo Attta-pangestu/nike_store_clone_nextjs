@@ -2,7 +2,10 @@ import React, { useEffect } from "react";
 import DashboardUsersView from "@/components/views/admin/Users";
 import { userServices } from "@/services/fetching";
 
-const AdminUserPage = ({ userData }: { userData: any }) => {
+// type
+import { UserData } from "@/types/type";
+
+const AdminUserPage = ({ userData }: { userData: UserData[] }) => {
   // const [userData, setUserData] = React.useState<any>([]);
   // useEffect(() => {
   //   const getUserData = async () => {
