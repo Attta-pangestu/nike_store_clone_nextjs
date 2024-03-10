@@ -2,7 +2,7 @@ import React, { FormEvent } from "react";
 import FormInput from "@/components/UI/Auth/Form";
 import { signIn } from "next-auth/react";
 import AuthLayout from "@/components/layouts/AuthLayout";
-import authServices from "@/services/fetching";
+import { authServices } from "@/services/fetching";
 const RegisterView = () => {
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -31,7 +31,6 @@ const RegisterView = () => {
     }
   };
 
-
   const handleRegisterWithGoogle = async () => {
     try {
       await signIn("google", { callbackUrl: "/" });
@@ -53,7 +52,6 @@ const RegisterView = () => {
         isLogin={false}
       />
     </AuthLayout>
-
   );
 };
 

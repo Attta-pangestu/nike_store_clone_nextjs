@@ -16,11 +16,15 @@
     width: 100%;
     border-collapse: collapse;
     border: 1px solid black;
+    text-align: center;
 
     td,
     th {
       border: 1px solid black;
       padding: 10px;
+      max-width: 140px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
 
     tr:nth-of-type(even) {

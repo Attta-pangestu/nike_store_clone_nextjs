@@ -12,6 +12,13 @@ import app from "./init";
 
 const firestoreApp = getFirestore(app);
 
+export const retriveData = async (collectionName: string) => {
+  const snapshot = await getDocs(collection(firestoreApp, collectionName));
+  const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  console.log(data);
+  return data;
+};
+
 export const retriveDataById = async (collectionName: string, id: string) => {
   const snapshotById = await getDoc(doc(firestoreApp, collectionName, id));
   const data = snapshotById.data();
