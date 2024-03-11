@@ -1,0 +1,11 @@
+.input {
+  padding: 0.6rem 1rem;
+  background-color: cornsilk;
+  font-size: 1.2rem;
+  font-weight: 400;
+  border-radius: 10px;
+
+  &:disabled {
+    opacity: 0.9;
+  }
+}

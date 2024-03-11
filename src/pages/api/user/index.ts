@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getAllUserData } from "@/services/user";
-import { useRouter } from "next/router";
+import { updateData } from "@/lib/firebase/service";
+
 export default async function hanlder(
   req: NextApiRequest,
   res: NextApiResponse
@@ -17,8 +18,22 @@ export default async function hanlder(
   }
 
   if (req.method === "PUT") {
-    const userData = req.body;
-    console.log(userData);
+    const { id, data } = req.body;
+    await updateData("users", id, data, (callback: boolean) => {
+      if (callback) {
+        return res.status(200).json({
+          status: true,
+          statusCode: 200,
+          message: "success update user",
+        });
+      }
+      return res.status(400).json({
+        status: false,
+        statusCode: 400,
+        message: "fail update user",
+      });
+    });
+    console.log(id, data);
     return res.status(200).json({
       status: true,
       statusCode: 200,
