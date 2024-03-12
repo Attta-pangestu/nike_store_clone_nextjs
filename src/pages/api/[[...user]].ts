@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getAllUserData } from "@/services/user";
-import { updateData } from "@/lib/firebase/service";
+import { updateData, deleteData } from "@/lib/firebase/service";
 
 export default async function hanlder(
   req: NextApiRequest,
@@ -14,6 +14,16 @@ export default async function hanlder(
       statusCode: 200,
       message: "success get user",
       data: userData,
+    });
+  }
+
+  if (req.method === "POST") {
+    const { data } = req.body;
+    console.log(data);
+    return res.status(200).json({
+      status: true,
+      statusCode: 200,
+      message: "success add user",
     });
   }
 
@@ -38,6 +48,24 @@ export default async function hanlder(
       status: true,
       statusCode: 200,
       message: "success update user",
+    });
+  }
+
+  if (req.method === "DELETE") {
+    const { user }: any = req.query;
+    await deleteData("users", user[1], (callback: boolean) => {
+      if (callback) {
+        return res.status(200).json({
+          status: true,
+          statusCode: 200,
+          message: "success delete user",
+        });
+      }
+      return res.status(400).json({
+        status: false,
+        statusCode: 400,
+        message: "fail delete user",
+      });
     });
   }
 }

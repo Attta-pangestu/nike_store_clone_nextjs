@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import style from "./index.module.scss";
 import AdminLayout from "@/components/layouts/AdminLayout";
 import Button from "@/components/UI/Base/Button";
@@ -13,7 +13,12 @@ import Input from "@/components/fragments/Input";
 import Select from "@/components/fragments/Select";
 
 const DashboardUsersView = ({ usersData }: { usersData: UserData[] }) => {
-  const [userDataModal, setUserDataModal] = React.useState<UserData>();
+  const [userDataModal, setUserDataModal] = useState<UserData | undefined>();
+  const [deleteUserDataModal, setDeleteUserDataModal] = useState<
+    UserData | undefined
+  >();
+  const [updatedUsersData, setUpdatedUsersData] =
+    useState<UserData[]>(usersData);
 
   const openModal = (data: UserData) => {
     setUserDataModal(data);
@@ -25,7 +30,23 @@ const DashboardUsersView = ({ usersData }: { usersData: UserData[] }) => {
       data: { status },
     } = await userServices.updateUserData(id, data);
     if (status) {
+      // Memperbarui data user yang diperbarui dalam state lokal
+      const updatedData = updatedUsersData.map((user) =>
+        user.id === id ? { ...user, ...data } : user
+      );
+      setUpdatedUsersData(updatedData);
       setUserDataModal(undefined);
+    }
+  };
+
+  const handleDeleteUserData = async (id: string) => {
+    const {
+      data: { status },
+    } = await userServices.deleteUserData(id);
+    if (status) {
+      const updatedData = updatedUsersData.filter((user) => user.id !== id);
+      setUpdatedUsersData(updatedData);
+      setDeleteUserDataModal(undefined);
     }
   };
 
@@ -33,21 +54,21 @@ const DashboardUsersView = ({ usersData }: { usersData: UserData[] }) => {
     <AdminLayout>
       <div className={style.users_header}>
         <i className="bx bxs-user"></i>
-        <h1>Dashboard Users Control</h1>
+        <h1>Dashboard Kontrol user</h1>
       </div>
       <table className={style.users_table}>
         <thead>
           <tr>
             <th>Id</th>
-            <th>Name</th>
+            <th>Nama</th>
             <th>Email</th>
-            <th>Image</th>
-            <th>Role</th>
-            <th>User Action</th>
+            <th>Gambar</th>
+            <th>Peran</th>
+            <th>Tindakan user</th>
           </tr>
         </thead>
         <tbody>
-          {usersData?.map((user: any) => (
+          {updatedUsersData.map((user: any) => (
             <tr key={user.id}>
               <td>{user.id}</td>
               <td>{user.name}</td>
@@ -63,7 +84,11 @@ const DashboardUsersView = ({ usersData }: { usersData: UserData[] }) => {
                   >
                     Edit
                   </Button>
-                  <Button type="secondary" theme="semi">
+                  <Button
+                    type="secondary"
+                    theme="semi"
+                    onClick={() => setDeleteUserDataModal(user)}
+                  >
                     Delete
                   </Button>
                 </div>
@@ -75,13 +100,13 @@ const DashboardUsersView = ({ usersData }: { usersData: UserData[] }) => {
 
       {userDataModal && Object.keys(userDataModal).length > 0 && (
         <Modal
-          title={`Edit User ${userDataModal.name}`}
-          onCloseModal={setUserDataModal}
+          title={`Edit user ${userDataModal.name}`}
+          onCloseModal={() => setUserDataModal(undefined)}
         >
           <div className={style.users_modal}>
             <Input
               type="text"
-              label="Name"
+              label="Nama"
               value={userDataModal.name}
               onChange={(e) => {
                 setUserDataModal({ ...userDataModal, name: e.target.value });
@@ -90,7 +115,7 @@ const DashboardUsersView = ({ usersData }: { usersData: UserData[] }) => {
 
             <Input
               type="text"
-              label="Image"
+              label="Gambar"
               value={userDataModal.image}
               onChange={(e) => {
                 setUserDataModal({ ...userDataModal, image: e.target.value });
@@ -125,7 +150,26 @@ const DashboardUsersView = ({ usersData }: { usersData: UserData[] }) => {
             }
           >
             {" "}
-            <i className="bx bx-save"></i> Update
+            <i className="bx bx-save"></i> Perbarui
+          </Button>
+        </Modal>
+      )}
+
+      {deleteUserDataModal && Object.keys(deleteUserDataModal).length > 0 && (
+        <Modal
+          title={`Delete user ${deleteUserDataModal.name}`}
+          onCloseModal={() => setDeleteUserDataModal(undefined)}
+        >
+          <p>
+            Apakah anda yakin ingin menghapus user {deleteUserDataModal.name}?
+          </p>
+          <Button
+            theme="semi"
+            type="primary"
+            onClick={() => handleDeleteUserData(deleteUserDataModal.id)}
+          >
+            {" "}
+            <i className="bx bx-save"></i> Hapus
           </Button>
         </Modal>
       )}

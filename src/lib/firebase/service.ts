@@ -8,6 +8,7 @@ import {
   where,
   addDoc,
   updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import app from "./init";
 
@@ -63,6 +64,21 @@ export const updateData = async (
 ) => {
   const docRef = await doc(firestoreApp, collectionName, id);
   await updateDoc(docRef, data)
+    .then(() => {
+      callback(true);
+    })
+    .catch((error) => {
+      callback(false);
+      console.log(error);
+    });
+};
+
+export const deleteData = async (
+  collectionName: string,
+  id: string,
+  callback: Function
+) => {
+  await deleteDoc(doc(firestoreApp, collectionName, id))
     .then(() => {
       callback(true);
     })

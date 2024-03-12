@@ -10,5 +10,7 @@ export const authServices = {
 export const userServices = {
   getAllUserData: () => axiosInstance.get(`${baseUrl}/api/user`),
   updateUserData: (id: string, data: UserData) =>
-    axiosInstance.put(`${baseUrl}/api/user/`, { id, data }),
+    axiosInstance.put(`${baseUrl}/api/user`, { id, data }),
+  deleteUserData: (id: string) =>
+    axiosInstance.delete(`${baseUrl}/api/user/${id}`),
 };

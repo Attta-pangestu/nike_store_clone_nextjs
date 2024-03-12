@@ -5,7 +5,7 @@ import { userServices } from "@/services/fetching";
 // type
 import { UserData } from "@/types/type";
 
-const AdminUserPage = ({ userData }: { userData: UserData[] }) => {
+const AdminUserPage = ({ usersData }: { usersData: UserData[] }) => {
   // const [userData, setUserData] = React.useState<any>([]);
   // useEffect(() => {
   //   const getUserData = async () => {
@@ -14,10 +14,9 @@ const AdminUserPage = ({ userData }: { userData: UserData[] }) => {
   //   };
   //   getUserData();
   // }, []);
-
   return (
     <>
-      <DashboardUsersView usersData={userData} />
+      <DashboardUsersView usersData={usersData} />
     </>
   );
 };
@@ -29,7 +28,7 @@ export async function getServerSideProps() {
   console.log(data);
   return {
     props: {
-      userData: data.data,
+      usersData: data.data,
     },
   };
 }
