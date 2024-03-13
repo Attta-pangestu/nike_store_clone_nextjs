@@ -12,13 +12,21 @@ import { userServices } from "@/services/fetching";
 import Input from "@/components/fragments/Input";
 import Select from "@/components/fragments/Select";
 
-const DashboardUsersView = ({ usersData }: { usersData: UserData[] }) => {
+const DashboardUsersView = ({
+  usersData,
+  session,
+}: {
+  usersData: UserData[];
+  session: any;
+}) => {
   const [userDataModal, setUserDataModal] = useState<UserData | undefined>();
   const [deleteUserDataModal, setDeleteUserDataModal] = useState<
     UserData | undefined
   >();
   const [updatedUsersData, setUpdatedUsersData] =
     useState<UserData[]>(usersData);
+
+  console.log(session);
 
   const openModal = (data: UserData) => {
     setUserDataModal(data);
@@ -28,7 +36,7 @@ const DashboardUsersView = ({ usersData }: { usersData: UserData[] }) => {
     console.log(data);
     const {
       data: { status },
-    } = await userServices.updateUserData(id, data);
+    } = await userServices.updateUserData(id, data, session.accessToken);
     if (status) {
       // Memperbarui data user yang diperbarui dalam state lokal
       const updatedData = updatedUsersData.map((user) =>
@@ -42,7 +50,7 @@ const DashboardUsersView = ({ usersData }: { usersData: UserData[] }) => {
   const handleDeleteUserData = async (id: string) => {
     const {
       data: { status },
-    } = await userServices.deleteUserData(id);
+    } = await userServices.deleteUserData(id, session.accessToken);
     if (status) {
       const updatedData = updatedUsersData.filter((user) => user.id !== id);
       setUpdatedUsersData(updatedData);

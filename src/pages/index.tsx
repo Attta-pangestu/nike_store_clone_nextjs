@@ -2,10 +2,11 @@ import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import { getSession, signOut, useSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
+import { Session } from "next-auth";
 
 export default function Home() {
   const { data: session } = useSession();
-
+  console.log(session);
   return (
     <>
       <Head>
@@ -20,20 +21,3 @@ export default function Home() {
     </>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context);
-  console.log(session);
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/auth/register",
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: { session }, // Pastikan session diteruskan sebagai properti ke komponen Home
-  };
-};

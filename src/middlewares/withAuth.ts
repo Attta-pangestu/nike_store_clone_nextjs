@@ -19,7 +19,6 @@ export default function withAuth(
 
     if (watcherURL.includes(pathname)) {
       const token = await getToken({ req, secret: process.env.NEXT_SECRET });
-      console.log(token);
       if (!token && !authUserNoAccess.includes(pathname)) {
         const url = new URL("/auth/login", req.url);
         url.searchParams.set("callbackUrl", encodeURI(req.url));
@@ -27,7 +26,6 @@ export default function withAuth(
       }
       // LOGIN SUCCESS
       else if (token) {
-        console.log(token);
         // if already login, redirect to home, restrict to auth page
         if (authUserNoAccess.includes(pathname)) {
           const url = new URL("/", req.url);
