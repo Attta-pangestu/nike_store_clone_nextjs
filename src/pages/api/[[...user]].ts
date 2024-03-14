@@ -25,6 +25,13 @@ export default async function hanlder(
     try {
       const decodeToken: any = await verifyToken(token as string);
       console.log(decodeToken);
+      if (decodeToken.role !== "admin") {
+        return res.status(401).json({
+          status: false,
+          statusCode: 401,
+          message: "Unauthorized",
+        });
+      }
       await updateData("users", id, data, (callback: boolean) => {
         if (callback) {
           return res.status(200).json({
@@ -65,8 +72,14 @@ export default async function hanlder(
       });
 
     try {
-      const decoded = await verifyToken(token);
-
+      const decoded: any = await verifyToken(token);
+      if (decoded.role !== "admin") {
+        return res.status(401).json({
+          status: false,
+          statusCode: 401,
+          message: "Unauthorized",
+        });
+      }
       await deleteData("users", idParams, (callback: boolean) => {
         if (callback) {
           return res.status(200).json({

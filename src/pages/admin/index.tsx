@@ -8,7 +8,7 @@ type PropTypes = {
   session: any;
 };
 
-const AdminPage = (props: PropTypes) => {
+const AdminPage = () => {
   return (
     <>
       <Head>
@@ -23,12 +23,3 @@ const AdminPage = (props: PropTypes) => {
 };
 
 export default AdminPage;
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context);
-  console.log(session);
-
-  return {
-    props: { session },
-  };
-};

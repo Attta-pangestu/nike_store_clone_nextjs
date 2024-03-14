@@ -2,19 +2,20 @@
 import { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import Navbar from "@/components/fragments/Navbar";
 
-const SessionCheck = ({ children }: { children: React.ReactNode }) => {
+const SessionCheckNavbar = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
   useEffect(() => {
-    if (!session) {
-      router.push("/auth/login");
-    }
+    console.log("session check", session);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session]);
+  }, []);
 
-  return children;
+  return session && Object.keys(session).length > 0 ? (
+    <Navbar session={session} />
+  ) : null;
 };
 
-export default SessionCheck;
+export default SessionCheckNavbar;
